@@ -244,3 +244,37 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+function running {
+  pgrep -f "$1" &> /dev/null
+}
+
+function rpid {
+  pgrep -f "$1" 2> /dev/null
+}
+
+# MySQL server:
+
+function msta {
+  if ! running mysql; then
+    mysql.server start
+  else
+    echo "MySQL already running"
+  fi
+}
+
+function msto {
+  if running mysql; then
+    mysql.server stop
+  else
+    echo "MySQL not running"
+  fi
+}
+
+function mstat {
+  if running mysql; then
+    echo "MySQL running"
+  else
+    echo "MySQL not running"
+  fi
+}
